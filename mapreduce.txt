@@ -1,0 +1,26 @@
+Create the 3 Java files in a folder while logged in as Hadoop user
+
+Compile the java files
+javac -classpath hadoop-core-1.2.1.jar -d wordcountproblem WC_Mapper.java WC.Reducer.java WC_Runner.java
+
+Create the JAR file
+$ jar -cvf wordcountproblem.jar -C wordcountproblem /
+
+Create a text file in the same folder with some content
+$ sudo nano data.txt
+
+$ start-dfs.sh
+$ start-yarn.sh
+
+# Uploading file to Hadoop
+1. Go to http://localhost:9870/ > click on utilities > Browse the file system
+2. Click on create a new folder and enter name as ‘test’
+3. Enter the created folder > click on upload button beside the create new folder button >
+Locate the created text file and open it
+
+#Run the MapReduce program with the JAR file
+$ hadoop jar wordcountproblem.jar com.wordcountproblem.WC_Runner /test/data.txt /r_output
+
+# print the generated output to the console
+$ hdfs dfs -cat /r_output/part-00000
+
